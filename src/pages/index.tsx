@@ -1,9 +1,101 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from '@/styles/Home.module.scss';
 import Header from '@/components/Header';
+import { useEffect, useState } from 'react';
+import { parse, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { styled } from '@mui/material/styles';
+import LinearProgress, {
+  linearProgressClasses,
+} from '@mui/material/LinearProgress';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+
+export const BorderLinearProgress = styled(LinearProgress)(() => ({
+  width: '100%',
+  height: 12,
+  border: '1px solid #ffffff',
+  borderRadius: 5,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: '#242528',
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 5,
+    backgroundColor: '#ffffff',
+  },
+}));
+
+interface Research {
+  myresearches: Array<unknown>;
+  running: string;
+  scripting: number;
+}
+
+interface Audience {
+  balance: number;
+  contacts: number;
+  sended: number;
+}
+
+interface DataSite {
+  audience: Audience;
+  createAt: string;
+  id: string;
+  credits: object;
+  researches: Research;
+}
 
 export default function Home() {
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
+  const [data, setData] = useState<DataSite | null>();
+
+  const convertDate = (dateString: string | undefined): string => {
+    if (dateString) {
+      const parsedDate = parse(dateString, 'dd/MM/yyyy HH:mm:ss', new Date());
+      return format(parsedDate, 'MMMM, yyyy', { locale: ptBR });
+    } else {
+      return '';
+    }
+  };
+
+  const formatNumber = (num: number = 0): string => {
+    return new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 0 }).format(
+      num,
+    );
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoadingData(true);
+      try {
+        const response = await fetch(
+          '/api/c6b1a48fbc86a778b977b0/home/7a581b0e16b559ff9a9957',
+        );
+        const data: DataSite = await response.json();
+        console.log(data);
+        setData(data);
+        setIsLoadingData(false);
+      } catch (error) {
+        console.error(error);
+        setIsLoadingData(false);
+      }
+    };
+
+    const fetchNotificationsData = async () => {
+      try {
+        const response = await fetch(
+          '/api/c6b1a48fbc86a778b977b0/notifications',
+        );
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+    fetchNotificationsData();
+  }, []);
+
   return (
     <>
       <Head>
@@ -13,7 +105,85 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className={`${styles.main}`}></main>
+      <main className={`${styles.main}`}>
+        <div className={styles.summaryResearchContainer}>
+          <div className={styles.container}>
+            <div className={styles.summaryContainer}>
+              <div className={styles.summaryHeader}>
+                <span>Resumo Mensal</span>
+                <span>{!isLoadingData && convertDate(data?.createAt)}</span>
+              </div>
+              <div className={styles.cardsContainer}>
+                <div className={styles.card}>
+                  <div className={styles.bullet} />
+                  <div className={styles.researchDetaild}>
+                    <div>
+                      <span>{data?.researches.running.charAt(0)}</span>
+                      <span>{data?.researches.running.slice(1)}</span>
+                    </div>
+                    <span className={styles.titleCard}>
+                      Pesquisas
+                      <br />
+                      em Campo
+                    </span>
+                  </div>
+                  <div className={styles.otherContainer}>
+                    {Array.from({ length: 5 }).map((bullet, index) => (
+                      <div key={index} className={styles.emptyBullet} />
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.card}>
+                  <div className={styles.researchDetaild}>
+                    <div>{data?.researches.scripting}</div>
+                    <span className={styles.titleCard}>
+                      Pesquisas em
+                      <br />
+                      Roteirização
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.card}>
+                  <div className={styles.researchDetaild}>
+                    <div>
+                      <span>{formatNumber(data?.audience.sended)}</span>
+                      <span>/{formatNumber(data?.audience.balance)}</span>
+                    </div>
+                    <span className={styles.titleCard}>
+                      Pesquisas
+                      <br />
+                      em Campo
+                    </span>
+                  </div>
+                  <div className={`${styles.otherContainer} ${styles.fullw}`}>
+                    <BorderLinearProgress
+                      variant="determinate"
+                      value={
+                        (Number(data?.audience.sended) /
+                          Number(data?.audience.balance)) *
+                        100
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.researchContainer}>
+              <div>
+                <img src="/images/animation-star.gif" alt="Estrela animada" />
+                <span>Pronto para conhecer seu cliente?</span>
+              </div>
+              <button
+                type="button"
+                className={`btn btn-primary ${styles.btnNewResearch}`}
+              >
+                Nova Pesquisa
+                <AddRoundedIcon />
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
     </>
   );
 }

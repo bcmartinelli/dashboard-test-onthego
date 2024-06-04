@@ -56,7 +56,11 @@ const Header = () => {
         </IconButton>
         <div className={styles.menuContainer}>
           {menuOptions.map((option, index) => (
-            <Link href={option.href} title={option.title} key={index}>
+            <Link
+              href={option.href}
+              title={option.title}
+              key={`desktop-${index}`}
+            >
               {option.title}
             </Link>
           ))}
@@ -105,7 +109,7 @@ const Header = () => {
             <Link
               href={option.href}
               title={option.title}
-              key={index}
+              key={`desktop-${index}`}
               className="menu-option"
             >
               {option.title}
