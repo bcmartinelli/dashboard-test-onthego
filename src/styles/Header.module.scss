@@ -1,0 +1,116 @@
+.headerContainer {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px 8px 26px;
+  gap: 0px;
+  border-bottom: 1px solid #242528;
+  background: #000000;
+  color: #fff;
+  z-index: 200;
+
+  .navContainer {
+    display: flex;
+    gap: 34px;
+
+    .menuContainer {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+
+      a {
+        text-transform: uppercase;
+        color: #8A9099;
+        font-size: 12px;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          color: #fff;
+        }
+      }
+    }
+
+    .menuIcon {
+      display: none;
+    }
+  }
+
+  .notificationIconBtn { display: none; }
+
+  .teamsUserContainer {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-width: 183px;
+
+    .userContainer {
+      span {
+        display: block;
+        font-size: 14px;
+
+        &:first-child {
+          color: #fff;
+          font-weight: 500;
+        }
+        &:last-child {
+          color: #8A9099;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (max-width: 1200px) {
+  .headerContainer {
+    .navContainer {
+      .menuContainer {
+        gap: 24px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .headerContainer {
+    .teamsUserContainer { display: none;}
+    .navContainer {
+      gap: 18px;
+      .menuContainer {
+        display: none;
+      }
+
+      .menuIcon {
+        display: flex;
+        margin: 0;
+        padding: 0;
+      }
+    }
+    .notificationIconBtn {
+      position: relative;
+      display: flex;
+      background: #333333;
+
+      .bulletNotification {
+        position: absolute;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #FF5D55;
+        border:1px solid #333333;
+        right: 10px;
+        top: 8px;
+      }
+    }
+  }
+}

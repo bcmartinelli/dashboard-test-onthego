@@ -1,0 +1,28 @@
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 4px;
+  border: 1px solid #242528;
+  padding: 6px 12px;
+  color: #ffffff;
+
+  .logo {
+    display: flex;
+    img {
+      width: 34px;
+    }
+  }
+
+  .text {
+    font-size: 14px;
+  }
+
+  &.mobile {
+    background: #EEF2F3;
+    color: #000000;
+    border: 0;
+    min-height: 78px;
+  }
+}

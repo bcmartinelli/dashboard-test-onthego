@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  font-family: "Public Sans", sans-serif;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: #EEF2F3;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.drawerMenu, .drawerMenu.userDetailContainer { display: none; }
+
+
+@media (max-width: 1024px) {
+  .drawerMenu {
+    display: flex;
+    z-index: 199;
+    .MuiModal-backdrop, .MuiDrawer-paper { top: 50px }
+
+    .menu-option {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 50px;
+      text-transform: uppercase;
+      color: #8A9099;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        color: #000;
+      }
+    }
+
+    .user-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 35px 0;
+      gap: 24px;
+
+      hr { min-width: 180px;}
+
+      .user-detail {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        span {
+          display: block;
+          font-size: 14px;
+          text-align: center;
+
+          &:first-child {
+            color: #000000;
+            font-weight: 700;
+            line-height: 18.8px !important;
+          }
+          &:last-child {
+            color: #8A9099;
+            font-weight: 400;
+            line-height: 16.45px;
+          }
+        }
+      }
+
+      a {
+        font-weight: 400;
+        font-size: 16px;
+        color: #000000;
+      }
+    }
+  }
+}
