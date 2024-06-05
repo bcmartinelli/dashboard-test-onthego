@@ -1,4 +1,5 @@
 .main {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +18,7 @@
       display: flex;
       justify-content: space-between;
       width: 100%;
-      max-width: 1230px;
+      max-width: 1216px;
 
       .summaryContainer {
         display: flex;
@@ -145,11 +146,12 @@
   }
 
   .dashboardContainer {
+    position: relative;
     display: flex;
     justify-content: start;
     align-items: stretch;
     width: calc(100% - 64px);
-    max-width: 1230px;
+    max-width: 1216px;
     gap: 24px;
     color: #000000;
     .leftContainer {
@@ -328,6 +330,140 @@
       }
     }
   }
+
+  .notificationContainer {
+    position: absolute;
+    top: -40px;
+    right: -96px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% + 40px + 47px);
+    max-width: 384px;
+    background: #ffffff;
+    overflow-y: auto;
+    padding-top: 110px;
+
+    .headerNotification {
+      position: sticky;
+      background: #ffffff;
+      top: -110px;
+      margin-top: -110px;
+      margin-bottom: 24px;
+      padding: 16px 0 0 24px;
+      min-height: 110px;
+      box-shadow: 0px 3px 6px 0px #00000029;
+      gap: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-direction: column;
+      z-index: 2;
+
+      h6 {
+        font-family: "Public Sans", sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+      }
+      div { gap: 6px; }
+      .chip {
+        padding: 2px 10px;
+        background-color: #FF5D55;
+        border-radius: 14px;
+        width: auto;
+        height: auto;
+        span {
+          padding: 0;
+          font-size: 12px;
+          font-weight: 700;
+          color: #ffffff;
+        }
+      }
+
+      .tabs {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        position: relative;
+        // bottom: -11px;
+
+        button {
+          border: 0;
+          font-size: 12px;
+          font-weight: 700;
+          text-transform: uppercase;
+          line-height: 14.1px;
+          background: none;
+          color: #FF5D55;
+        }
+
+        span {
+          display: block;
+          height: 4px;
+          background-color: #FF5D55;
+        }
+      }
+    }
+
+    .bodyNotification {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      padding-bottom: 20px;
+
+      h6 {
+        font-size: 14px;
+        font-weight: 400;
+        width: calc(100% - 60px);
+        color: #8A9099;
+      }
+    }
+  }
+
+}
+
+@media (min-width: 1920px) {
+  .main {
+
+    .dashboardContainer {
+      width: 100%;
+      max-width: 100%;
+      .leftContainer, .rightContainer {
+        max-width: 100%;
+      }
+
+      .leftContainer {
+        .mainCard {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 100%;
+          .cardContent {
+            height: 100%;
+            .cardsContainer {
+              grid-template-columns: 1fr 1fr 1fr;
+              max-width: 100%;
+              height: 100%;
+              .card {
+                grid-column: auto !important;
+                max-width: 100% !important;
+                height: 100% !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .notificationContainer {
+      position: fixed;
+      top: 62px;
+      right: 0;
+      max-width: 340px;
+    }
+  }
 }
 
 @media (max-width: 1280px) {
@@ -347,7 +483,7 @@
   }
 }
 
-@media (max-width: 1140px) {
+@media (max-width: 1148px) {
   .main {
     .summaryResearchContainer {
       .container {
@@ -364,10 +500,18 @@
         }
 
         .researchContainer {
+          position: relative;
+          right: 0;
           width: 100%;
           max-width: 100%;
         }
       }
+    }
+    .dashboardContainer {
+      max-width: calc(100% - 380px);
+    }
+    .notificationContainer {
+      right: -412px;
     }
   }
 }
@@ -399,11 +543,16 @@
 
     .dashboardContainer {
       flex-direction: column;
+      max-width: 100%;
+      width: 100%;
+
       .leftContainer { max-width: 100%;}
       .rightContainer {
         max-width: 100%;
         gap: 24px;
       }
     }
+
+    .notificationContainer { display: none;}
   }
 }

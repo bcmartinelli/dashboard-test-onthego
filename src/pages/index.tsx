@@ -10,7 +10,16 @@ import LinearProgress, {
 } from '@mui/material/LinearProgress';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import EastRoundedIcon from '@mui/icons-material/EastRounded';
-import { Box, Card, CardActions, CardContent, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Chip,
+  Typography,
+} from '@mui/material';
+import CardNotification from '@/components/CardNotification/CardNotification';
+import { DataSite, Notification } from '@/types';
 
 export const BorderLinearProgress = styled(LinearProgress)(() => ({
   width: '100%',
@@ -26,35 +35,10 @@ export const BorderLinearProgress = styled(LinearProgress)(() => ({
   },
 }));
 
-interface Credits {
-  running: number;
-  available: number;
-  reserved: number;
-}
-
-interface Research {
-  myresearches: Array<unknown>;
-  running: string;
-  scripting: number;
-}
-
-interface Audience {
-  balance: number;
-  contacts: number;
-  sended: number;
-}
-
-interface DataSite {
-  audience: Audience;
-  createAt: string;
-  id: string;
-  credits: Credits;
-  researches: Research;
-}
-
 export default function Home() {
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [data, setData] = useState<DataSite | null>();
+  const [notifications, setNotifications] = useState<Array<Notification>>([]);
 
   const convertDate = (dateString: string | undefined): string => {
     if (dateString) {
@@ -79,7 +63,6 @@ export default function Home() {
           '/api/c6b1a48fbc86a778b977b0/home/7a581b0e16b559ff9a9957',
         );
         const data: DataSite = await response.json();
-        console.log(data);
         setData(data);
         setIsLoadingData(false);
       } catch (error) {
@@ -94,7 +77,7 @@ export default function Home() {
           '/api/c6b1a48fbc86a778b977b0/notifications',
         );
         const data = await response.json();
-        console.log(data);
+        setNotifications(data);
       } catch (error) {
         console.error(error);
       }
@@ -191,103 +174,137 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <section className={styles.dashboardContainer}>
-          <div className={styles.leftContainer}>
-            <Card variant="outlined">
-              <CardContent className={styles.cardContent}>
-                <Typography variant="h6" gutterBottom>
-                  Créditos para Painel
-                </Typography>
-                <Box className={styles.cardsContainer}>
-                  <div className={`${styles.card} ${styles.cardAvailable}`}>
-                    <Typography>
-                      {formatNumber(data?.credits.available)}
-                    </Typography>
-                    <span>
-                      Créditos
-                      <br />
-                      Disponíveis
-                    </span>
-                  </div>
-                  <div className={`${styles.card} ${styles.cardRunning}`}>
-                    <Typography>
-                      {formatNumber(data?.credits.running)}
-                    </Typography>
-                    <span>
-                      Créditos
-                      <br />
-                      em Campo
-                    </span>
-                  </div>
-                  <div className={`${styles.card} ${styles.cardReserved}`}>
-                    <Typography>
-                      {formatNumber(data?.credits.reserved)}
-                    </Typography>
-                    <span>
-                      Créditos
-                      <br />
-                      Reservados
-                    </span>
-                  </div>
-                </Box>
-              </CardContent>
-              <CardActions className={styles.cardAction}>
-                <button type="button" className="btn btn-secondary">
-                  Gerenciar Créditos
-                </button>
-              </CardActions>
-            </Card>
-          </div>
-
-          <div className={styles.rightContainer}>
-            <div className={styles.audienceContainer}>
-              <Card variant="outlined">
+        <div
+          style={{
+            position: 'relative',
+            width: 'calc(100% - 64px)',
+            maxWidth: '1230px',
+          }}
+        >
+          <section className={styles.dashboardContainer}>
+            <div className={styles.leftContainer}>
+              <Card variant="outlined" className={styles.mainCard}>
                 <CardContent className={styles.cardContent}>
                   <Typography variant="h6" gutterBottom>
-                    <img src="/images/contact-folder.svg" alt="" />
-                    <span>Audiência</span>
+                    Créditos para Painel
                   </Typography>
                   <Box className={styles.cardsContainer}>
-                    <div className={styles.info}>
+                    <div className={`${styles.card} ${styles.cardAvailable}`}>
                       <Typography>
-                        {formatNumber(data?.audience.contacts)}
+                        {formatNumber(data?.credits.available)}
                       </Typography>
-                      <span>Contatos</span>
+                      <span>
+                        Créditos
+                        <br />
+                        Disponíveis
+                      </span>
                     </div>
-                    <button type="button" className="btn btn-secondary">
-                      <EastRoundedIcon />
-                    </button>
+                    <div className={`${styles.card} ${styles.cardRunning}`}>
+                      <Typography>
+                        {formatNumber(data?.credits.running)}
+                      </Typography>
+                      <span>
+                        Créditos
+                        <br />
+                        em Campo
+                      </span>
+                    </div>
+                    <div className={`${styles.card} ${styles.cardReserved}`}>
+                      <Typography>
+                        {formatNumber(data?.credits.reserved)}
+                      </Typography>
+                      <span>
+                        Créditos
+                        <br />
+                        Reservados
+                      </span>
+                    </div>
                   </Box>
                 </CardContent>
+                <CardActions className={styles.cardAction}>
+                  <button type="button" className="btn btn-secondary">
+                    Gerenciar Créditos
+                  </button>
+                </CardActions>
               </Card>
             </div>
-            <div className={styles.sendedContainer}>
-              <Card variant="outlined">
-                <CardContent className={styles.cardContent}>
-                  <Typography variant="h6" gutterBottom>
-                    <img src="/images/send-icon.svg" alt="" />
-                    <span>Disparos</span>
-                  </Typography>
-                  <Box className={styles.cardsContainer}>
-                    <div className={styles.info}>
-                      <div className={styles.infoNumbers}>
-                        <span>{formatNumber(data?.audience.sended)}</span>
-                        <span>/{formatNumber(data?.audience.balance)}</span>
+
+            <div className={styles.rightContainer}>
+              <div className={styles.audienceContainer}>
+                <Card variant="outlined">
+                  <CardContent className={styles.cardContent}>
+                    <Typography variant="h6" gutterBottom>
+                      <img src="/images/contact-folder.svg" alt="" />
+                      <span>Audiência</span>
+                    </Typography>
+                    <Box className={styles.cardsContainer}>
+                      <div className={styles.info}>
+                        <Typography>
+                          {formatNumber(data?.audience.contacts)}
+                        </Typography>
+                        <span>Contatos</span>
                       </div>
-                      <span>Disparos feitos</span>
-                    </div>
-                  </Box>
-                  <CardActions className={styles.cardAction}>
-                    <button type="button" className="btn btn-primary">
-                      Ir para Campanhas
-                    </button>
-                  </CardActions>
-                </CardContent>
-              </Card>
+                      <button type="button" className="btn btn-secondary">
+                        <EastRoundedIcon />
+                      </button>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </div>
+              <div className={styles.sendedContainer}>
+                <Card variant="outlined">
+                  <CardContent className={styles.cardContent}>
+                    <Typography variant="h6" gutterBottom>
+                      <img src="/images/send-icon.svg" alt="" />
+                      <span>Disparos</span>
+                    </Typography>
+                    <Box className={styles.cardsContainer}>
+                      <div className={styles.info}>
+                        <div className={styles.infoNumbers}>
+                          <span>{formatNumber(data?.audience.sended)}</span>
+                          <span>/{formatNumber(data?.audience.balance)}</span>
+                        </div>
+                        <span>Disparos feitos</span>
+                      </div>
+                    </Box>
+                    <CardActions className={styles.cardAction}>
+                      <button type="button" className="btn btn-primary">
+                        Ir para Campanhas
+                      </button>
+                    </CardActions>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-          </div>
-        </section>
+
+            <section className={styles.notificationContainer}>
+              <div className={styles.headerNotification}>
+                <div className="d-flex align-center">
+                  <Typography variant="h6">Atualizações</Typography>
+                  <Chip
+                    label={notifications.filter((n) => !n.read).length}
+                    className={styles.chip}
+                  />
+                </div>
+                <div className={styles.tabs}>
+                  <div className={styles.tab}>
+                    <button>Todas</button>
+                    <span />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.bodyNotification}>
+                <Typography variant="h6">Hoje</Typography>
+                {notifications.map((notification, index) => (
+                  <CardNotification
+                    key={`notification-${index}`}
+                    notification={notification}
+                  />
+                ))}
+              </div>
+            </section>
+          </section>
+        </div>
       </main>
     </>
   );
