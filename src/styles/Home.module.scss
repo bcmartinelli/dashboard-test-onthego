@@ -1,9 +1,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
+  gap: 40px;
 
   .summaryResearchContainer {
     display: flex;
@@ -143,6 +143,191 @@
       }
     }
   }
+
+  .dashboardContainer {
+    display: flex;
+    justify-content: start;
+    align-items: stretch;
+    width: calc(100% - 64px);
+    max-width: 1230px;
+    gap: 24px;
+    color: #000000;
+    .leftContainer {
+      width: 100%;
+      max-width: 367px;
+
+      .cardAction {  padding: 8px 20px 16px; }
+
+      .cardContent {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 16px 20px;
+
+        h6 {
+          font-size: 12px;
+          font-weight: 400;
+          color: #000000;
+          text-transform: uppercase;
+        }
+
+        .cardsContainer {
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          width: 100%;
+          max-width: 236px;
+
+          .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px;
+            border-bottom: 10px;
+            border-style: solid;
+            p {
+              font-size: 24px;
+              font-weight: 700;
+            }
+            span {
+              display: block;
+              font-size: 10px;
+              font-weight: 500;
+              text-transform: uppercase;
+              line-height: 11.75px;
+            }
+
+            &.cardAvailable {
+              grid-column: 1 / span 2;
+              width: 100%;
+              max-width: 236px;
+              min-height: 110px;
+              border-color: #0AD2A5;
+
+              p { font-size: 38px; }
+              span { font-size: 12px; }
+            }
+            &.cardRunning {
+              grid-column: 1 / span 1;
+              width: 100%;
+              max-width: 110px;
+              height: 96px;
+              border-color: #C7B2FF;
+            }
+            &.cardReserved {
+              grid-column: 2 / span 1;
+              width: 100%;
+              max-width: 110px;
+              height: 96px;
+              border-color: #8A9099;
+              color: #8A9099
+            }
+          }
+        }
+      }
+    }
+    .rightContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 343px;
+      .cardContent {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 18px;
+        padding: 0;
+        min-height: 152px;
+
+        h6 {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 12px;
+          font-weight: 400;
+          color: #000000;
+          text-transform: uppercase;
+          line-height: 14.1px;
+          padding: 2px 0 2px 16px;
+          height: 36px;
+          margin: 0;
+          border-bottom: 1px solid #C9D1D6;
+        }
+
+        .cardsContainer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 20px 16px 20px;
+          p {
+            font-size: 38px;
+            font-weight: 700;
+          }
+          span {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 16.45px;
+          }
+        }
+
+        button { width: auto; &:hover svg { transform: rotate(0deg); } }
+      }
+
+      .sendedContainer {
+        .cardContent {
+          gap: 12px;
+          min-height: 176px;
+
+          .cardsContainer {
+            padding: 0 20px;
+
+            .info {
+              .infoNumbers {
+                display: flex;
+                align-items: baseline;
+                gap: 1px;
+                span {
+                  display: block;
+                  font-weight: 700;
+                  font-size: 38px;
+                  color: #000000;
+                  line-height: 44.65px;
+                  &:last-child {
+                    font-weight: 400;
+                    font-size: 20px;
+                    color: #8A9099;
+                    line-height: 16.45px;
+                  }
+                }
+
+              }
+            }
+
+            p {
+              line-height: 44px;
+            }
+            span {
+              display: block;
+              font-size: 14px;
+              font-weight: 700;
+              line-height: 16.45px;
+            }
+          }
+        }
+        .cardAction {
+          padding-bottom: 16px;
+          button { width: 100%; border: 1px solid #ffffff; &:hover {border: 1px solid #000000 }}
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 1280px) {
@@ -209,6 +394,15 @@
           width: 100%;
           max-width: 100%;
         }
+      }
+    }
+
+    .dashboardContainer {
+      flex-direction: column;
+      .leftContainer { max-width: 100%;}
+      .rightContainer {
+        max-width: 100%;
+        gap: 24px;
       }
     }
   }

@@ -9,6 +9,8 @@ import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import EastRoundedIcon from '@mui/icons-material/EastRounded';
+import { Box, Card, CardActions, CardContent, Typography } from '@mui/material';
 
 export const BorderLinearProgress = styled(LinearProgress)(() => ({
   width: '100%',
@@ -23,6 +25,12 @@ export const BorderLinearProgress = styled(LinearProgress)(() => ({
     backgroundColor: '#ffffff',
   },
 }));
+
+interface Credits {
+  running: number;
+  available: number;
+  reserved: number;
+}
 
 interface Research {
   myresearches: Array<unknown>;
@@ -40,7 +48,7 @@ interface DataSite {
   audience: Audience;
   createAt: string;
   id: string;
-  credits: object;
+  credits: Credits;
   researches: Research;
 }
 
@@ -106,7 +114,7 @@ export default function Home() {
       </Head>
       <Header />
       <main className={`${styles.main}`}>
-        <div className={styles.summaryResearchContainer}>
+        <section className={styles.summaryResearchContainer}>
           <div className={styles.container}>
             <div className={styles.summaryContainer}>
               <div className={styles.summaryHeader}>
@@ -135,7 +143,7 @@ export default function Home() {
                 </div>
                 <div className={styles.card}>
                   <div className={styles.researchDetaild}>
-                    <div>{data?.researches.scripting}</div>
+                    <div>{formatNumber(data?.researches.scripting)}</div>
                     <span className={styles.titleCard}>
                       Pesquisas em
                       <br />
@@ -182,7 +190,104 @@ export default function Home() {
               </button>
             </div>
           </div>
-        </div>
+        </section>
+
+        <section className={styles.dashboardContainer}>
+          <div className={styles.leftContainer}>
+            <Card variant="outlined">
+              <CardContent className={styles.cardContent}>
+                <Typography variant="h6" gutterBottom>
+                  Créditos para Painel
+                </Typography>
+                <Box className={styles.cardsContainer}>
+                  <div className={`${styles.card} ${styles.cardAvailable}`}>
+                    <Typography>
+                      {formatNumber(data?.credits.available)}
+                    </Typography>
+                    <span>
+                      Créditos
+                      <br />
+                      Disponíveis
+                    </span>
+                  </div>
+                  <div className={`${styles.card} ${styles.cardRunning}`}>
+                    <Typography>
+                      {formatNumber(data?.credits.running)}
+                    </Typography>
+                    <span>
+                      Créditos
+                      <br />
+                      em Campo
+                    </span>
+                  </div>
+                  <div className={`${styles.card} ${styles.cardReserved}`}>
+                    <Typography>
+                      {formatNumber(data?.credits.reserved)}
+                    </Typography>
+                    <span>
+                      Créditos
+                      <br />
+                      Reservados
+                    </span>
+                  </div>
+                </Box>
+              </CardContent>
+              <CardActions className={styles.cardAction}>
+                <button type="button" className="btn btn-secondary">
+                  Gerenciar Créditos
+                </button>
+              </CardActions>
+            </Card>
+          </div>
+
+          <div className={styles.rightContainer}>
+            <div className={styles.audienceContainer}>
+              <Card variant="outlined">
+                <CardContent className={styles.cardContent}>
+                  <Typography variant="h6" gutterBottom>
+                    <img src="/images/contact-folder.svg" alt="" />
+                    <span>Audiência</span>
+                  </Typography>
+                  <Box className={styles.cardsContainer}>
+                    <div className={styles.info}>
+                      <Typography>
+                        {formatNumber(data?.audience.contacts)}
+                      </Typography>
+                      <span>Contatos</span>
+                    </div>
+                    <button type="button" className="btn btn-secondary">
+                      <EastRoundedIcon />
+                    </button>
+                  </Box>
+                </CardContent>
+              </Card>
+            </div>
+            <div className={styles.sendedContainer}>
+              <Card variant="outlined">
+                <CardContent className={styles.cardContent}>
+                  <Typography variant="h6" gutterBottom>
+                    <img src="/images/send-icon.svg" alt="" />
+                    <span>Disparos</span>
+                  </Typography>
+                  <Box className={styles.cardsContainer}>
+                    <div className={styles.info}>
+                      <div className={styles.infoNumbers}>
+                        <span>{formatNumber(data?.audience.sended)}</span>
+                        <span>/{formatNumber(data?.audience.balance)}</span>
+                      </div>
+                      <span>Disparos feitos</span>
+                    </div>
+                  </Box>
+                  <CardActions className={styles.cardAction}>
+                    <button type="button" className="btn btn-primary">
+                      Ir para Campanhas
+                    </button>
+                  </CardActions>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );

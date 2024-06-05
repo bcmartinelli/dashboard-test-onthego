@@ -23,7 +23,7 @@ body {
     gap: 12px;
     width: 100%;
     border-radius: 4px;
-    padding: 18px 74px;
+    padding: 18px;
     font-size: 14px;
     font-weight: 700;
     background-color: #000000;
@@ -57,6 +57,36 @@ body {
 
       &:hover {
         color: #000000;
+        svg {
+          transform: rotate(90deg);
+        }
+      }
+    }
+    &.btn-secondary {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #C9D1D6;
+      svg {
+        transition: transform 0.5s ease;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000;
+        transition: top 0.4s ease;
+        z-index: -1;
+      }
+      &:hover::before {
+        top: 0;
+      }
+
+      &:hover {
+        color: #ffffff;
         svg {
 
         transform: rotate(90deg);
