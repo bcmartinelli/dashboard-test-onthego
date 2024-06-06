@@ -2,25 +2,28 @@
 
 Esse projeto foi desenvolvido para posição de front-end para a empresa On The Go.
 
-## System Requirements
+** Demo **
+Acesso ao [DEMO](https://dashboard-test-onthego.vercel.app/) - Vercel
+
+## Requisitos de Sistema
 
 - [Node.js](https://nodejs.org/en/) (v18.20.2)
 - MacOS, Windows (incluindo WSL), e Linux são supported
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) (Opcional)
 
-## Installation
+## Instalação
 
 Clone o projeto a do github https://github.com/martinelli4630/dashboard-test-onthego.git
-Accesse a pasta do projeto. Voce pode usar o comando `cd dashboard-test-onthego` no terminal
+Accesse a pasta do projeto. Você pode usar o comando `cd dashboard-test-onthego` no terminal
 
-**Download project dependencies**
+**Download dependencias do projeto**
 
-Run `npm install` or `yarn`
+Rode `npm install` ou `yarn`
 
-## Development server
+## Servidor de desenvolvimento
 
-Run `npm run dev` or `yarn dev` for a dev server. Navigate to `http://localhost:3000`.
+Rode `npm run dev` ou `yarn dev` para um servidor de desenvolvimento. Navegue até `http://localhost:3000`.
 
-## Contributors
+## Colaboradores
 
 - Bruno C. Martinelli
