@@ -4,8 +4,14 @@ export interface Credits {
   reserved: number;
 }
 
+export interface MyResearchs {
+  id: number;
+  name: string;
+  status: string;
+}
+
 export interface Research {
-  myresearches: Array<unknown>;
+  myresearches: Array<MyResearchs>;
   running: string;
   scripting: number;
 }

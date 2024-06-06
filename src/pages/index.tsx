@@ -19,7 +19,8 @@ import {
   Typography,
 } from '@mui/material';
 import CardNotification from '@/components/CardNotification/CardNotification';
-import { DataSite, Notification } from '@/types';
+import { DataSite, MyResearchs, Notification } from '@/types';
+import Carousel from '@/components/Carousel/Carousel';
 
 export const BorderLinearProgress = styled(LinearProgress)(() => ({
   width: '100%',
@@ -39,6 +40,7 @@ export default function Home() {
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [data, setData] = useState<DataSite | null>();
   const [notifications, setNotifications] = useState<Array<Notification>>([]);
+  const [slides, setSlides] = useState<Array<MyResearchs>>([]);
 
   const convertDate = (dateString: string | undefined): string => {
     if (dateString) {
@@ -63,7 +65,13 @@ export default function Home() {
           '/api/c6b1a48fbc86a778b977b0/home/7a581b0e16b559ff9a9957',
         );
         const data: DataSite = await response.json();
+        // Duplicado para poder exibir mais de 3 no slide
+        data.researches.myresearches = [
+          ...data.researches.myresearches,
+          ...data.researches.myresearches,
+        ];
         setData(data);
+        setSlides(data.researches.myresearches);
         setIsLoadingData(false);
       } catch (error) {
         console.error(error);
@@ -178,9 +186,15 @@ export default function Home() {
           style={{
             position: 'relative',
             width: 'calc(100% - 64px)',
-            maxWidth: '1230px',
+            maxWidth: '1210px',
+            gap: '25px',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
+          <section className={styles.carouselContainer}>
+            {slides.length > 0 && <Carousel slides={slides} />}
+          </section>
           <section className={styles.dashboardContainer}>
             <div className={styles.leftContainer}>
               <Card variant="outlined" className={styles.mainCard}>

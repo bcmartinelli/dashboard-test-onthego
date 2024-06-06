@@ -81,7 +81,7 @@ body {
         transition: top 0.4s ease;
         z-index: -1;
       }
-      &:hover::before {
+      &:not(:disabled):hover::before {
         top: 0;
       }
 

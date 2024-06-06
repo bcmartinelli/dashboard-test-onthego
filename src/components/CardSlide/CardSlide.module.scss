@@ -1,0 +1,60 @@
+
+.slideItem{
+  padding-top: 20px;
+
+  .cardSlide {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 20px;
+    background: #fff;
+    border: 2px solid #000000;
+    border-bottom-width: 22px;
+    border-radius: 6px;
+    height: 222px;
+    transition: all 0.3s ease;
+    top:0;
+
+     &:hover {
+      top: -20px;
+      color: #FF5D55;
+      svg path { fill: #FF5D55}
+      .draft { color: #FF5D55 !important}
+     }
+
+     .bullet {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      top: 8px;
+      right: 8px;
+      background: #0AD2A5;
+     }
+
+     .headerCard {
+      border-left: 2px solid #000;
+      padding-left: 6px;
+
+      h6 {
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        position: relative;
+        img {
+          position: absolute;
+          top: -10px
+        }
+      }
+
+      p {
+        font-size: 18px;
+        font-weight: 700;
+        &.draft {
+          color: #C3C7CA;
+        }
+      }
+     }
+  }
+}
